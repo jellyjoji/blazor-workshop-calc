@@ -1,0 +1,138 @@
+﻿@page "/calc-page"
+@rendermode InteractiveServer
+
+<style>
+    .display-calc {
+        width: 320px;
+        text-align: right;
+        font-size: 32px;
+    }
+
+    .button-number {
+        height: 80px;
+        width: 80px;
+        background-color: lightskyblue;
+        font-size: 24px;
+    }
+</style>
+
+<h3>CalcPage</h3>
+
+@* 계산기 출력 화면 *@
+<label class="display-calc">@this.DisplayValue</label>
+
+@* 화살표함수 람다식 계산기 버튼 *@
+<div style="display:flex">
+    <button class="button-number" @onclick="() => clickButton(7)">7</button>
+    <button class="button-number" @onclick="() => clickButton(8)">8</button>
+    <button class="button-number" @onclick="() => clickButton(9)">9</button>
+    <button class="button-number" @onclick="clickClear">C</button>
+</div>
+
+<div style="display:flex">
+    <button class="button-number" @onclick="() => clickButton(4)">4</button>
+    <button class="button-number" @onclick="() => clickButton(5)">5</button>
+    <button class="button-number" @onclick="() => clickButton(6)">6</button>
+    <button class="button-number" @onclick="clickPlus">+</button>
+</div>
+
+<div style="display:flex">
+    <button class="button-number" @onclick="() => clickButton(1)">1</button>
+    <button class="button-number" @onclick="() => clickButton(2)">2</button>
+    <button class="button-number" @onclick="() => clickButton(3)">3</button>
+    <button class="button-number" @onclick="clickMinus">-</button>
+</div>
+
+<div style="display:flex">
+    <button class="button-number"></button>
+    <button class="button-number" @onclick="() => clickButton(0)">0</button>
+    <button class="button-number"></button>
+    @* 결과값 *@
+    <button class="button-number" @onclick="clickResult">=</button>
+</div>
+
+@code {
+  @* 계산기의 연산자를 나타냅니다. Plus(덧셈), Minus(뺄셈), None(연산자 없음) 세 가지 값을 가질 수 있습니다. *@
+        private enum CalcOp
+    {
+        None,
+        Plus,
+        Minus,
+    }
+
+    @* 현재 사용자에게 표시되는 숫자 *@
+    private int DisplayValue { get; set; } = 0;
+    @*  현재 계산기에 저장된 숫자 *@
+    private int StoredValue { get; set; } = 0;
+    @* 현재 선택된 연산자를 나타냅니다. Plus가 선택되면 덧셈이, Minus가 선택되면 뺄셈이 수행됩니다. 위 코드에서 초기값으로 None(연산자 없음)이 들어가있습니다. *@
+    @* 초기값 None *@
+    private CalcOp op = CalcOp.None;
+   
+   @* clickButton(int value) 메서드 추가하기*@
+      private void clickButton(int value)
+    {
+        DisplayValue = DisplayValue * 10 + value;
+
+        writeStatus();
+    }
+
+    @* clickPlus() 메서드 추가하기 *@
+        private void clickPlus()
+    {
+        this.op = CalcOp.Plus;
+        StoredValue = DisplayValue;
+        DisplayValue = 0;
+
+        writeStatus();
+    }
+
+    @* clickMinus() 메서드 추가하기 *@
+
+        private void clickMinus()
+    {
+        this.op = CalcOp.Minus;
+        StoredValue = DisplayValue;
+        DisplayValue = 0;
+
+        writeStatus();
+    }
+
+    @* clickResult() 메서드 추가하기 *@
+        private void clickResult()
+    {
+        if (op == CalcOp.Plus)
+        {
+            DisplayValue += StoredValue;
+        }
+        else if (op == CalcOp.Minus)
+        {
+            DisplayValue = StoredValue - DisplayValue;
+        }
+
+        StoredValue = 0;
+        op = CalcOp.None;
+
+        writeStatus();
+    }
+
+@* clickClear() 매서드 추가하기 *@
+
+    private void clickClear()
+    {
+        StoredValue = 0;
+        op = CalcOp.None;
+        DisplayValue = 0;
+
+        writeStatus();
+    }
+    @* writeStatus() 매서드 추가하기 *@
+    private void writeStatus()
+    {
+        Console.WriteLine($"DisplayValue[{this.DisplayValue}] StoredValue[{this.StoredValue}] op[{this.op}]");
+    }
+
+
+}
+
+@* dotnet download https://dotnet.microsoft.com/ko-kr/download *@
+@* 이제 blazor/blazor-workshop-calc/save-points/session2/BlazorCalc 폴더로 이동해서 dotnet watch 를 터미널에 입력하면 미리보기할수있다.  *@

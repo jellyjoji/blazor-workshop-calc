@@ -42,3 +42,7 @@
 * [해커그라운드 해커톤 리드미](https://github.com/hackersground-kr/hackers-ground/blob/main/README.md), [해커그라운드 해커톤 마크다운 원문](https://raw.githubusercontent.com/hackersground-kr/hackers-ground/main/README.md)
 * [클라우드 스킬 챌린지 리드미](https://github.com/hackersground-kr/CloudSkillsChallenge/blob/main/README.md), [클스챌 마크다운 원문](https://raw.githubusercontent.com/hackersground-kr/CloudSkillsChallenge/main/README.md)
 * [깃헙으로 끝말잇기 리드미](https://github.com/hackersground-kr/GithubWordRelay), [깃헙으로 끝말잇기 마크다운 원문](https://github.com/hackersground-kr/GithubWordRelay) -->
+
+## Completed
+
+  <img src="/docs/images/completed.png">
